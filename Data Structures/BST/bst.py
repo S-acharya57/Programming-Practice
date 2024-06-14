@@ -158,3 +158,24 @@ def randomize_BST(num:int)->TreeNode:
         print(f'Inserting {nums[i]}')
         insert(root, nums[i])
     return root 
+
+
+def LCA(root:TreeNode, num1:int, num2:int)->int:
+    """Function to get the lowest common ancestor of two nodes of a BST
+
+    Arguments:
+        num1 -- a number 
+        num2 -- another number to get LCA
+
+    Returns:
+        Lowest Common Ancestor of num1 and num2 
+    """
+    if(root.data > num1) and (root.data>num2) and root.left:
+        print(f'Calling LCA for {root.left.data, num1, num2}')
+        return LCA(root.left, num1, num2)
+    
+    if(root.data < num1) and (root.data<num2) and root.right: 
+        print(f'Calling LCA for {root.right.data, num1, num2}')
+        return LCA(root.right, num1, num2)
+    
+    return root.data 
