@@ -1,4 +1,5 @@
 import numpy as np 
+import matplotlib.pyplot as plt 
 
 
 class TreeNode:
@@ -179,3 +180,40 @@ def LCA(root:TreeNode, num1:int, num2:int)->int:
         return LCA(root.right, num1, num2)
     
     return root.data 
+
+
+def plot_tree(root:TreeNode):
+    """Function to plot the BST
+
+    Arguments:
+        root -- TreeNode of the BSt
+
+    Returns:
+        a plot of the tree with nodes and edges visible
+    """
+    fig, ax = plt.subplots(figsize=(12, 8))
+    ax.axis('off')
+
+    def calculate_positions(node, x=0, y=0, level=1, positions=None, parent=None):
+        if positions is None:
+            positions = {}
+
+        if node is not None:
+            positions[node] = (x, y)
+            color = 'red' if parent is None else ('green' if node == parent.left else 'blue')  # Assign color based on node type
+            if parent:
+                ax.plot([positions[parent][0], x], [positions[parent][1], y], color=color, linewidth=2)  # Draw lines between nodes
+            # Recursively calculate positions for left and right subtrees
+            horizontal_gap = 2.5 / (2 ** level)  # Adjust horizontal gap based on level
+            calculate_positions(node.left, x - horizontal_gap, y - 1.5, level + 1, positions, node)
+            calculate_positions(node.right, x + horizontal_gap, y - 1.5, level + 1, positions, node)
+        
+        return positions
+
+    positions = calculate_positions(root)
+
+    for node, (x, y) in positions.items():
+        ax.text(x, y, str(node.data), size=14, ha='center', va='center', bbox=dict(facecolor='white', boxstyle='circle'))
+
+    plt.tight_layout()
+    plt.show()
