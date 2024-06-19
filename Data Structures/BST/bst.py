@@ -217,3 +217,27 @@ def plot_tree(root:TreeNode):
 
     plt.tight_layout()
     plt.show()
+
+
+def get_height(root:TreeNode)->int:
+    """Function to get the height of the binary tree 
+
+    Arguments:
+        root -- root node of the tree
+    """
+    # print(f'Root is {root.data}')
+    if root is None:
+        # print(f'Returned 0')
+        return 0 
+    # print(f'Root is {root.data}')
+
+    # print(f'Calling left of {root.data}\n')
+    left_height = get_height(root.left)
+    # print(f'Calling right of {root.data}\n')
+    
+    right_height = get_height(root.right)
+    # print(f'Left height of {root.data} is {left_height}')
+    # print(f'right height of {root.data} is {right_height}')
+
+    # print(f'{max(left_height, right_height) + 1}')
+    return max(left_height, right_height) + 1
